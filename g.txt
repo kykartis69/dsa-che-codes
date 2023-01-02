@@ -1,0 +1,176 @@
+﻿#include <iostream>
+using namespace std;
+struct SLL
+{
+	int n;
+struct SLL *next;
+};
+
+struct SLL* get_node()
+{
+
+	struct SLL *temp;
+	temp=new struct SLL;
+	temp->next=NULL;
+	return(temp);
+}
+struct SLL*  get_link()
+{
+	int ch;
+	struct SLL *head,*temp,*new_node;
+	head=NULL;
+	do
+	{
+		new_node=get_node();
+		cout<<"enter the number:";
+		cin>>new_node->n;
+		if(head==NULL)
+		{
+			head=new_node;
+			temp=new_node;
+		}
+		else
+		{
+			temp->next=new_node;
+		    temp=temp->next;
+		}
+	cout<<"Do you want to enter more numbers?(0/1)";
+	cin>>ch;
+	}while(ch==1);
+	return(head);
+}
+
+void display(struct SLL* head)
+{
+
+struct SLL *temp;
+
+temp=head;
+while(temp!=NULL)
+{
+cout<<"\nnumber: "<<temp->n;
+	temp=temp->next;
+}
+}
+void sort(struct SLL* head)
+{
+	struct SLL *temp,*temp1;
+	int key;
+	temp=head;
+	temp1=head;
+	while(temp->next!=NULL)
+	{
+		while(temp1->next!=NULL)
+		{
+cout<<"\n loop";
+		   if(temp1->n < (temp1->next)->n)
+		   {
+			key=temp1->n;
+			temp1->n=(temp1->next)->n;
+			(temp1->next)->n=key;
+		    }
+		    temp1=temp1->next;
+	    }
+	temp=temp->next;
+	}
+	//display(head);
+}
+struct SLL* deletenode(struct SLL*head)
+{
+	struct SLL *temp,*temp1;
+	int key;
+	temp=head;
+	while(temp!=NULL)
+	{
+		if(temp->n<0)
+		{
+			if(temp==head)
+			{
+				head=head->next;
+				temp->next=NULL;
+				delete(temp);
+			}
+			else
+			{
+				temp1->next=temp->next;
+				temp->next=NULL;
+				delete(temp);
+			}
+
+
+		}
+		temp1=temp;
+		temp=temp->next;
+	}
+	display( head);
+}
+void separate(struct SLL* head)
+{
+	struct SLL*temp,*head1,*temp1,*temp2,*head2;
+	SLL *newnode;
+	temp=head;
+	head1=NULL;
+	head2=NULL;
+	while(temp!=NULL)
+	{
+		if(temp->n<0)
+		{
+			newnode=get_node();
+			newnode->n=temp->n;
+
+			if(head1==NULL)
+			{
+				head1=newnode;
+				temp1=newnode;
+			}
+			else
+			{
+				temp1->next=newnode;
+				temp1=temp1->next;
+			}
+
+		}
+		else
+		{
+			newnode=get_node();
+			newnode->n=temp->n;
+
+			if(head2==NULL)
+			{
+				head2=newnode;
+				temp2=newnode;
+			}
+			else
+			{
+				temp2->next=newnode;
+				temp2=temp2->next;
+			}
+
+		}
+		temp=temp->next;
+	}
+	cout<<"\nthe list of positive integers:\n";
+	display(head2);
+
+	cout<<"\nthe list of negative integers is:\n";
+	//sort(head1);
+	display(head1);
+}
+int main()
+{
+	struct SLL *head;
+	cout<<"\n";
+    head=get_link();
+    cout<<"\n";
+    display(head);
+   // sort(head);
+
+    //cout<<"sorted list is";display(head);
+    cout<<"\nseperation :";
+   // separate(head);
+    head=deletenode(head);
+    cout<<"\n";
+    display(head);
+    return 0;
+
+}

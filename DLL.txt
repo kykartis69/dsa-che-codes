@@ -1,0 +1,217 @@
+﻿#include<iostream>
+using namespace std;
+
+class DLL
+{
+public:
+	int data;
+	DLL *next,*prev;
+public:
+	DLL* create();
+	void display(DLL*);
+	void complement(DLL*);
+	void add(DLL*,DLL*);
+	DLL* getnode();
+};
+DLL* DLL::getnode()
+{
+
+	 DLL *temp;
+	temp=new DLL;
+	temp->next=temp->prev=NULL;
+	return(temp);
+}
+DLL* DLL ::create()
+{int i=0;
+DLL *head,*newnode,*temp;
+cout<<"\nenter the binary number bit by bit";
+
+
+		head=NULL;
+		do{
+		newnode= getnode();
+		cout<<"\nenter bit";
+		cin>>newnode->data;
+		if(head==NULL)
+		{
+			head=newnode;
+			temp=newnode;
+		}
+		else
+		{
+			temp->next=newnode;
+			newnode->prev=temp;
+			temp=newnode;
+		}
+		cout<<"\ndo u want to enter the next bit?(0/1)";
+		cin>>i;
+	}while(i==1);
+
+	return(head);
+}
+void DLL::display(DLL* head)
+{
+	DLL *temp;
+	temp=head;
+	cout<<"\n list in forward :";
+	while(temp->next!=NULL)
+	{
+		cout<<temp->data;
+		temp=temp->next;
+	}
+	cout<<temp->data;
+
+}
+
+void DLL::complement(DLL*head)
+{
+	DLL *head1,*temp1,*temp;
+	temp1=head;
+	head1=head;
+	while(temp1!=NULL)
+	{
+		if(temp1->data==1)
+			temp1->data=0;
+		else
+			temp1->data=1;
+		temp1=temp1->next;
+	}
+	cout<<"\n1's complement:";
+	display(head1);
+	temp1=head1;
+	while(temp1->next!=NULL)
+
+		temp1=temp1->next;
+		int carry=1;
+	while(temp1!=NULL)
+	{
+		if(temp1->data==1 && carry ==0)
+		{
+			temp1->data=1;
+			carry=0;
+		}
+		else if(temp1->data==1 && carry ==1)
+		{
+			temp1->data=0;
+			carry=1;
+		}
+		else if(temp1->data==0 && carry ==0)
+				{
+					temp1->data=0;
+					carry=0;
+				}
+		else if(temp1->data==0 && carry ==1)
+				{
+					temp1->data=1;
+					carry=0;
+				}
+		temp1=temp1->prev;
+	}
+	cout<<"\n2's complement:";
+	display(head1);
+}
+void DLL::add(DLL*head1,DLL*head2)
+{
+    int x;
+	DLL *temp1,*temp2,*head3,*temp3,*newnode;
+	temp1=head1;
+	temp2=head2;
+	head3=NULL;
+	//temp3=head3;
+	while(temp1->next!=NULL)
+
+			temp1=temp1->next;
+	while(temp2->next!=NULL)
+
+			temp2=temp2->next;
+	int carry=0;
+	while(temp1!=NULL && temp2!=NULL)
+	{
+		newnode=getnode();
+		if(head3==NULL)
+		{
+			head3=newnode;
+			temp3=newnode;
+		}
+		else
+		{
+		     temp3->next=newnode;
+			newnode->prev=temp3;
+			temp3=newnode;
+		}
+	if(temp1->data==0 && temp2->data==0 && carry==0)
+	{
+
+		x=0;
+		carry=0;
+	}
+	else if(temp1->data==0 && temp2->data==0 &&carry==1)
+		{
+						x=1;
+						carry=0;
+		}
+	else if(temp1->data==0 && temp2->data==1 &&carry==0)
+		{
+						x=1;
+						carry=0;
+		}
+	else if(temp1->data==1 && temp2->data==0 &&carry==0)
+		{
+						x=1;
+						carry=0;
+		}
+	else if(temp1->data==0 && temp2->data==1 &&carry==1)
+		{
+						x=0;
+			carry=1;
+		}
+	else if(temp1->data==1 && temp2->data==0 &&carry==1)
+		{
+					x=0;
+			carry=1;
+		}
+	else if(temp1->data==1 && temp2->data==1 &&carry==0)
+		{
+						x=0;
+			carry=1;
+		}
+	else if(temp1->data==1 && temp2->data==1 &&carry==1)
+		{
+						x=1;
+			carry=1;
+		}
+	temp1=temp1->prev;
+	temp2=temp2->prev;
+	temp3->data=x;
+
+	}
+
+	cout<<"\naddition:";
+	cout<<"carry="<<carry<<" ";
+	while(temp3->prev!=NULL)
+		{
+			cout<<temp3->data;
+			temp3=temp3->prev;
+		}
+		cout<<temp3->data;
+
+}
+int main()
+{
+	DLL *head1,*head2;
+	DLL obj;
+	head1=obj.create();
+	obj.display(head1);
+
+	head2=obj.create();
+	obj.display(head2);
+
+
+	obj.add(head1,head2);
+	cout<<"\nfor 1st binary number";
+			obj.complement(head1);
+			cout<<"\nfor 2nd binary number";
+				obj.complement(head2);
+	return 0;
+
+}

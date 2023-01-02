@@ -1,0 +1,148 @@
+﻿#include<iostream>
+using namespace std;
+class queue
+{
+	int a[10];
+	int rear,front;
+public:
+	queue(){
+		rear=front=-1;
+	}
+	void add_rear();
+	void add_front();
+	void del_rear();
+	void del_front();
+	void display();
+};
+
+
+	//implement of double ended queue using array
+void queue::add_rear()
+	{
+		int x;
+		cout<<" enter value to be inserted";
+		cin>>x;
+		if(rear==9)
+		{
+			cout<<"queue is full";
+		}
+		else if(rear==-1)
+		{
+			rear++;
+			front++;
+			a[rear]=x;
+		}
+		else
+		{
+			rear++;
+			a[rear]=x;
+		}
+
+}
+
+void queue:: add_front()
+
+			{
+				int x;
+				cout<<"enter the value to be inserted";
+				cin>>x;
+				if(rear==9)
+				{
+					cout<<"\n queue is full";
+				}
+				else
+				{
+					if(front==-1)
+						front++;
+					for(int i=rear;i>=0;i--)
+						a[i+1]=a[i];
+					rear++;
+					a[0]=x;
+
+				}
+
+			}
+void queue:: del_rear()
+					{
+						int x;
+						if(rear==0)
+						{
+							x=a[rear];
+							rear=-1;
+						}
+						else
+						{
+							x=a[rear];
+							rear--;
+                         }
+						cout<<"\n deleted element is :"<<x;
+
+					}
+void queue:: del_front()
+					{
+
+
+						if(rear==front)
+						{
+							rear=front=-1;
+							cout<<"\ndeleted element is :"<<a[0];
+						}
+						else
+						{
+							cout<<"\ndeleted element is :"<<a[0];
+							for(int i=0;i<rear;i++)
+							{	a[i]=a[i+1];
+
+							}
+							rear--;
+						}
+	}
+void queue::display()
+			{
+				int i;
+				if(rear==-1||front==-1)
+					cout<<"queue is empty";
+				else
+				{
+					cout<<"front:";
+					for(i=0;i<=rear;i++)
+					{
+						cout<<" "<<a[i];
+					}
+					cout<<":rear";
+				}
+ }
+   int main()
+	{
+		int ch;
+		queue q;
+		do
+		{
+			cout<<"\n 1.insert at the rear end";
+		cout<<"\n 2.insert at front";
+		cout<<"\n 3.delete at rear";
+		cout<<"\n 4.delete at front";
+		cout<<"\n 5.display front &rear";
+		cout<<"\n 6.Exit";
+		cout<<"\n enter your choice :";
+		cin>>ch;
+
+		switch(ch)
+		{
+		case 1: q.add_rear();
+		break;
+		case 2: q.add_front();
+		break;
+		case 3:q.del_rear();
+		break;
+		case 4:q.del_front();
+		break;
+		case 5:q.display ();
+		break;
+		}
+		cout<<"\n do u want to perform another operation(1/0):";
+		cin>>ch;
+		}	while(ch!=6);
+
+			return 0;
+		}

@@ -1,0 +1,211 @@
+﻿#include <iostream>
+using namespace std;
+struct SLL
+{
+	char name[15];
+	int PRN;
+	int rollno;
+	char year[5];
+struct SLL *next;
+};
+class linklist
+{
+	struct SLL *head,*new_node;
+public:
+	struct SLL *get_node();
+	struct SLL *get_link();
+	void display(struct SLL*);
+	struct SLL*insert_start(SLL*head);
+	void insert_end(SLL*head);
+	void insert_between(SLL*head);
+	struct SLL* deletenode( SLL*head) ;
+};
+struct SLL* linklist::get_node()
+{
+
+	struct SLL *temp;
+	temp=new struct SLL;
+	temp->next=NULL;
+	return(temp);
+}
+struct SLL* linklist:: get_link()
+{
+	int ch;
+	struct SLL *head,*temp,*new_node;
+	head=NULL;
+	do
+	{
+		new_node=get_node();
+		cout<<"enter the name of member:";
+		cin>>new_node->name;
+		cout<<"enter the PRN of member:";
+		cin>>new_node->PRN;
+		cout<<"enter the roll number of member:";
+		cin>>new_node->rollno;
+		cout<<"enter the year in which member is studying:";
+		cin>>new_node->year;
+		if(head==NULL)
+		{
+			head=new_node;
+			temp=new_node;
+		}
+		else
+		{
+			temp->next=new_node;
+		    temp=temp->next;
+		}
+	cout<<"Do you want to enter more members?(0/1)";
+	cin>>ch;
+	}while(ch==1);
+	return(head);
+}
+void linklist::display(struct SLL* head)
+{
+
+	struct SLL *temp;
+
+	temp=head;
+	while(temp!=NULL)
+	{
+	cout<<"\nName: "<<temp->name;
+	cout<<"\nPRN:"<<temp->PRN;
+	cout<<"\nRoll number:"<<temp->rollno;
+	cout<<"\nyear:"<<temp->year;
+		temp=temp->next;
+	}
+}
+struct SLL* linklist::insert_start(SLL*head)
+{
+	SLL *new_node;
+	new_node=get_node();
+	cout<<"enter the name of member:";
+	cin>>new_node->name;
+	cout<<"enter the PRN of member:";
+	cin>>new_node->PRN;
+	cout<<"enter the roll number of member:";
+	cin>>new_node->rollno;
+	cout<<"enter the year in which member is studying:";
+	cin>>new_node->year;
+	new_node->next=head;
+	head=new_node;
+	return(head);
+}
+void linklist::insert_end(SLL*head)
+{
+	SLL *new_node,*temp;
+	new_node=get_node();
+	cout<<"enter the name of member:";
+	cin>>new_node->name;
+	cout<<"enter the PRN of member:";
+	cin>>new_node->PRN;
+	cout<<"enter the roll number of member:";
+	cin>>new_node->rollno;
+	cout<<"enter the year in which member is studying:";
+	cin>>new_node->year;
+	temp=head;
+	while(temp->next!=NULL)
+		temp=temp->next;
+	temp->next=new_node;
+
+}
+void linklist::insert_between(SLL*head)
+{
+	SLL *temp,*new_node;
+	int pos,count=1;
+	cout<<"enter position of new node";
+	cin>>pos;
+	new_node=get_node();
+	cout<<"enter the name of member:";
+	cin>>new_node->name;
+	cout<<"enter the PRN of member:";
+	cin>>new_node->PRN;
+	cout<<"enter the roll number of member:";
+	cin>>new_node->rollno;
+	cout<<"enter the year in which member is studying:";
+	cin>>new_node->year;
+	temp=head;
+	while(temp!=NULL)
+	{
+		if(count==pos)
+			break;
+		temp=temp->next;
+		count++;
+	}
+	new_node->next=temp->next;
+	temp->next=new_node;
+}
+struct SLL* linklist::deletenode(SLL*head)
+{
+	struct SLL *temp,*temp1;
+	int key,flag=0;
+	cout<<"\nenter PRN of the member whom you want to delete";
+	cin>>key;
+	temp=head;
+	while(temp!=NULL)
+	{
+		if(key==temp->PRN)
+		{
+			flag=1;
+			break;
+		}
+	temp1=temp;
+	temp=temp->next;
+	}
+	if(flag==1)
+		cout<<"member found!!";
+	else
+	{
+		cout<<"member not found";
+		return 0;
+
+	}
+	if(temp==head)
+	{
+		head=head->next;
+		temp->next=NULL;
+		delete(temp);
+	}
+	else
+	{
+	  temp1->next=temp->next;
+		temp->next=NULL;
+		delete(temp);
+	}
+	return (head);
+}
+int main()
+{
+	int ch,x;
+	linklist a;
+	struct SLL *head;
+	cout<<"!!!!PINACAL CLUB!!!!";
+	do
+	{
+	cout<<"\nenter ur choice \n1.insert members\n2.display\n3.insert president\n4.insert secretary\n5.insert new member\n6.delete existing member";
+	cin>>ch;
+	switch(ch)
+	{
+	case 1:
+		head=a.get_link();
+	    break;
+	case 2:
+		a.display(head);
+		break;
+	case 3:
+			head=a.insert_start(head);
+			break;
+	case 5:a.insert_between(head);
+			break;
+	case 4:a.insert_end(head);
+			break;
+	case 6:
+		head=a.deletenode(head);
+
+
+	}
+	cout<<"\ndo u want to go to main menu?(0/1)";
+	cin>>x;
+	}while(x!=0);
+
+	return 0;
+}
